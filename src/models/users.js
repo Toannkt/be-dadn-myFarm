@@ -10,19 +10,15 @@ module.exports = (sequelize, DataTypes) => {
              * The `models/index` file will call this method automatically.
              */
             static associate(models) {
-                  User.belongsTo(models.Allcodes, {
-                        foreignKey: "positionId",
-                        targetKey: "keyMap",
-                        as: "positionData",
-                  });
-                  User.belongsTo(models.Allcodes, {
-                        foreignKey: "gender",
-                        targetKey: "keyMap",
-                        as: "genderData",
-                  });
-                  User.hasOne(models.Markdown, { foreignKey: "doctorId" });
-                  User.hasOne(models.Doctor_Infor, { foreignKey: "doctorId" });
-                  User.hasMany(models.Schedule, { foreignKey: "doctorId", as: "doctorData" });
+                  // User.belongsTo(models.Allcodes, {
+                  //       foreignKey: "positionId",
+                  //       targetKey: "keyMap",
+                  //       as: "positionData",
+                  // });
+                  // User.hasOne(models.Markdown, { foreignKey: "doctorId" });
+                  // User.hasOne(models.Doctor_Infor, { foreignKey: "doctorId" });
+                  // User.hasMany(models.Schedule, { foreignKey: "doctorId", as: "doctorData" });
+                  User.hasOne(models.Location, { foreignKey: "id_User" });
             }
       }
       User.init(
@@ -32,11 +28,9 @@ module.exports = (sequelize, DataTypes) => {
                   firstName: DataTypes.STRING,
                   lastName: DataTypes.STRING,
                   address: DataTypes.STRING,
-                  gender: DataTypes.STRING,
                   roleId: DataTypes.STRING,
                   phoneNumber: DataTypes.STRING,
-                  positionId: DataTypes.STRING,
-                  image: DataTypes.STRING,
+                  description: DataTypes.TEXT("long"),
             },
             {
                   sequelize,

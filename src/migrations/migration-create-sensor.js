@@ -3,50 +3,48 @@
 "use strict";
 module.exports = {
       up: async (queryInterface, Sequelize) => {
-            await queryInterface.createTable("doctor_infors", {
+            await queryInterface.createTable("sensors", {
                   id: {
                         allowNull: false,
                         autoIncrement: true,
                         primaryKey: true,
                         type: Sequelize.INTEGER,
                   },
-                  doctorId: {
+                  type: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  value: {
+                        allowNull: false,
+                        type: Sequelize.FLOAT,
+                  },
+                  name: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  status: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  idLocation: {
+                        allowNull: false,
                         type: Sequelize.INTEGER,
+                  },
+                  minLimited: {
                         allowNull: false,
+                        type: Sequelize.FLOAT,
                   },
-                  specialtyId: {
-                        type: Sequelize.INTEGER,
-                  },
-                  clinicId: {
-                        type: Sequelize.INTEGER,
-                  },
-                  priceId: {
-                        type: Sequelize.STRING,
+                  maxLimited: {
                         allowNull: false,
+                        type: Sequelize.FLOAT,
                   },
-                  provinceId: {
-                        type: Sequelize.STRING,
-                        allowNull: false,
-                  },
-                  paymentId: {
-                        type: Sequelize.STRING,
-                        allowNull: false,
-                  },
-                  addressClinic: {
-                        type: Sequelize.STRING,
-                        allowNull: false,
-                  },
-                  nameClinic: {
-                        type: Sequelize.STRING,
-                        allowNull: false,
-                  },
-                  note: {
+                  timeOn: {
+                        allowNull: true,
                         type: Sequelize.STRING,
                   },
-                  count: {
-                        type: Sequelize.INTEGER,
-                        allowNull: false,
-                        defaultValue: 0,
+                  timeOff: {
+                        allowNull: true,
+                        type: Sequelize.STRING,
                   },
                   createdAt: {
                         allowNull: false,
@@ -59,6 +57,8 @@ module.exports = {
             });
       },
       down: async (queryInterface, Sequelize) => {
-            await queryInterface.dropTable("doctor_infors");
+            await queryInterface.dropTable("sensors");
       },
 };
+
+// npx sequelize-cli db:migrate --to migration-create-user.js

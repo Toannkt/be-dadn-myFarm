@@ -1,8 +1,8 @@
 /** @format */
 
 import userService from "../services/userService";
-
-let handleLogin = async (req, res) => {
+// import { createJSONToken, parseJwt } from "../utils/auth";
+const handleLogin = async (req, res) => {
       let email = req.body.email;
       let password = req.body.password;
       if (!email || !password) {
@@ -12,15 +12,17 @@ let handleLogin = async (req, res) => {
             });
       }
       let userData = await userService.handleUserLogin(email, password);
+      // const token = createJSONToken(userData.user.id);
       return res.status(200).json({
             errCode: userData.errCode,
             message: userData.errMessage,
             user: userData.user ? userData.user : {},
+            // token: token,
       });
 };
 
 let handleGetAllUsers = async (req, res) => {
-      let id = req.query.id;
+      let id = req.body.id;
       if (!id) {
             return res.status(200).json({
                   errCode: 1,
@@ -36,19 +38,31 @@ let handleGetAllUsers = async (req, res) => {
       });
 };
 
-let handleCreateNewUser = async (req, res) => {
+const handleCreateNewUser = async (req, res) => {
       let message = await userService.createNewUser(req.body);
       console.log(message);
       return res.status(200).json(message);
 };
 
-let handleEditNewUser = async (req, res) => {
+const handleEditNewUser = async (req, res) => {
       let data = req.body;
       let message = await userService.updateUserData(data);
       return res.status(200).json(message);
 };
 
-let handleDeleteNewUser = async (req, res) => {
+const changePassword = async (req, res) => {
+      let data = req.body;
+      let message = await userService.changePassword(data);
+      return res.status(200).json(message);
+};
+
+const forgotPassword = async (req, res) => {
+      let email = req.body.email;
+      let message = await userService.forgotPassword(email);
+      return res.status(200).json(message);
+};
+
+const handleDeleteUser = async (req, res) => {
       if (!req.body.id) {
             return res.status(200).json({
                   errCode: 1,
@@ -59,35 +73,38 @@ let handleDeleteNewUser = async (req, res) => {
       return res.status(200).json(message);
 };
 
-let getAllCode = async (req, res) => {
-      try {
-            let typeInput = req.query.type;
-            if (!typeInput) {
-                  return res.status(200).json({
-                        errCode: 1,
-                        errMessage: "Missing parameter, plz provide type",
-                  });
-            }
-            let data = await userService.getAllCodeService(typeInput);
-            if (data) {
-                  return res.status(200).json(data);
-            } else {
-                  return res.status(200).json({ errCode: 1, errMessage: "No data found" });
-            }
-      } catch (e) {
-            console.log("get all code error", e);
-            return res.status(200).json({
-                  errCode: -1,
-                  errMessage: "Error from server",
-            });
-      }
-};
+// let getAllCode = async (req, res) => {
+//       try {
+//             let typeInput = req.query.type;
+//             if (!typeInput) {
+//                   return res.status(200).json({
+//                         errCode: 1,
+//                         errMessage: "Missing parameter, plz provide type",
+//                   });
+//             }
+//             let data = await userService.getAllCodeService(typeInput);
+//             if (data) {
+//                   return res.status(200).json(data);
+//             } else {
+//                   return res.status(200).json({ errCode: 1, errMessage: "No data found" });
+//             }
+//       } catch (e) {
+//             console.log("get all code error", e);
+//             return res.status(200).json({
+//                   errCode: -1,
+//                   errMessage: "Error from server",
+//             });
+//       }
+// };
 
 module.exports = {
       handleLogin: handleLogin,
       handleGetAllUsers: handleGetAllUsers,
-      handleCreateNewUser: handleCreateNewUser,
       handleEditNewUser: handleEditNewUser,
-      handleDeleteNewUser: handleDeleteNewUser,
-      getAllCode: getAllCode,
+      handleDeleteUser: handleDeleteUser,
+      // getAllCode: getAllCode,
+      handleCreateNewUser: handleCreateNewUser,
+      handleLogin: handleLogin,
+      changePassword: changePassword,
+      forgotPassword: forgotPassword,
 };

@@ -3,26 +3,39 @@
 "use strict";
 module.exports = {
       up: async (queryInterface, Sequelize) => {
-            await queryInterface.createTable("schedules", {
+            await queryInterface.createTable("devices", {
                   id: {
                         allowNull: false,
                         autoIncrement: true,
                         primaryKey: true,
                         type: Sequelize.INTEGER,
                   },
-                  doctorId: {
-                        type: Sequelize.INTEGER,
-                  },
-                  currentNumber: {
-                        type: Sequelize.INTEGER,
-                  },
-                  maxNumber: {
-                        type: Sequelize.INTEGER,
-                  },
-                  date: {
+                  type: {
+                        allowNull: false,
                         type: Sequelize.STRING,
                   },
-                  timeType: {
+                  name: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  status: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  idLocation: {
+                        allowNull: false,
+                        type: Sequelize.INTEGER,
+                  },
+                  autoMode: {
+                        allowNull: false,
+                        type: Sequelize.STRING,
+                  },
+                  timeOn: {
+                        allowNull: true,
+                        type: Sequelize.STRING,
+                  },
+                  timeOff: {
+                        allowNull: true,
                         type: Sequelize.STRING,
                   },
                   createdAt: {
@@ -36,6 +49,8 @@ module.exports = {
             });
       },
       down: async (queryInterface, Sequelize) => {
-            await queryInterface.dropTable("schedules");
+            await queryInterface.dropTable("devices");
       },
 };
+
+// npx sequelize-cli db:migrate --to migration-create-user.js

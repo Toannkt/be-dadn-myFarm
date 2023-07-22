@@ -2,6 +2,8 @@
 
 import bcrypt from "bcryptjs";
 import db from "../models/index";
+import validations from "../utils/validations";
+import emailService from "./emailService";
 const salt = bcrypt.genSaltSync(10);
 
 const handleUserLogin = (email, password) => {
@@ -12,12 +14,13 @@ const handleUserLogin = (email, password) => {
                   if (isExist) {
                         let user = await db.User.findOne({
                               raw: true,
-                              attributes: ["roleId", "email", "password", "firstName", "lastName"],
+                              attributes: ["id", "roleId", "email", "password", "firstName", "lastName"],
                               where: { email: email },
                         });
                         if (user) {
                               let check = await bcrypt.compareSync(password, user.password);
                               if (check) {
+                                    // const token = createJSONToken
                                     userData.errCode = 0;
                                     userData.errMessage = "Ok!";
                                     delete user.password;
@@ -111,10 +114,8 @@ const createNewUser = async (data) => {
                               lastName: data.lastName,
                               address: data.address,
                               phoneNumber: data.phoneNumber,
-                              gender: data.gender,
-                              roleId: data.roleId,
-                              positionId: data.positionId,
-                              image: data.image,
+                              roleId: "CUSTOMER",
+                              description: data.description,
                         });
                         resolve({
                               errCode: 0,
@@ -144,7 +145,7 @@ const deleteUser = (id) => {
                   });
                   resolve({
                         errCode: 0,
-                        message: "User deleted!",
+                        message: `User ${id} deleted successfully!`,
                   });
             } catch (e) {
                   reject(e);
@@ -170,10 +171,6 @@ const updateUserData = (data) => {
                         user.lastName = data.lastName;
                         user.address = data.address;
                         user.phoneNumber = data.phoneNumber;
-                        user.roleId = data.roleId;
-                        user.positionId = data.positionId;
-                        user.gender = data.gender;
-                        user.image = data.image;
                         await user.save();
                         resolve({
                               errCode: 0,
@@ -191,28 +188,116 @@ const updateUserData = (data) => {
       });
 };
 
-const getAllCodeService = (typeInput) => {
+const changePassword = (data) => {
       return new Promise(async (resolve, reject) => {
             try {
-                  let res = {};
-                  let allcode = await db.Allcodes.findAll({
-                        where: { type: typeInput },
+                  if (!data.id) {
+                        resolve({
+                              errCode: 2,
+                              errMessage: "Missing parameters!",
+                        });
+                  }
+                  let user = await db.User.findOne({
+                        where: { id: data.id },
+                        raw: false,
                   });
-                  res.errCode = 0;
-                  res.data = allcode;
-                  resolve(res);
+                  if (!user) {
+                        resolve({
+                              errCode: 2,
+                              errMessage: "Id does not exist!",
+                        });
+                  }
+                  let { password, newPassword, confirmPassword } = data;
+                  let checkPw = await bcrypt.compareSync(password, user.password);
+                  let checkNpw = await bcrypt.compareSync(newPassword, user.password);
+                  if (checkPw === false) {
+                        resolve({
+                              errCode: 3,
+                              message: "Wrong password, please try again!",
+                        });
+                  } else if (checkNpw) {
+                        resolve({
+                              errCode: 4,
+                              message: "New password must be the old password, please try again!",
+                        });
+                  } else if (newPassword !== confirmPassword) {
+                        resolve({
+                              errCode: 5,
+                              message: "Confirm password failed! Please try again",
+                        });
+                  } else {
+                        if (user) {
+                              user.password = await hashUserPassword(newPassword);
+                              await user.save();
+                        }
+                        resolve({
+                              errCode: 0,
+                              message: "User update new password successfully!",
+                        });
+                  }
             } catch (e) {
                   reject(e);
             }
       });
 };
 
+const forgotPassword = (email) => {
+      return new Promise(async (resolve, reject) => {
+            try {
+                  let user = await db.User.findOne({
+                        where: { email: email },
+                        raw: false,
+                  });
+                  if (!user) {
+                        resolve({
+                              errCode: 2,
+                              message: "Email does not exist! Please try again.",
+                        });
+                  } else {
+                        const resetPassword = "123456";
+                        const hashPw = await hashUserPassword(resetPassword);
+                        user.password = hashPw;
+                        await user.save();
+                        await emailService.sendEmail({
+                              reciverEmail: user.email,
+                              firstName: user.firstName,
+                              resetPassword: resetPassword,
+                              // time: data.timeString,
+                              // redirecLink: buildUrlEmail(data.doctorId, token),
+                        });
+                        resolve({
+                              errCode: 0,
+                              message: "Please check your email to received new password!",
+                        });
+                  }
+            } catch (e) {
+                  reject(e);
+            }
+      });
+};
+// const getAllCodeService = (typeInput) => {
+//       return new Promise(async (resolve, reject) => {
+//             try {
+//                   let res = {};
+//                   let allcode = await db.Allcodes.findAll({
+//                         where: { type: typeInput },
+//                   });
+//                   res.errCode = 0;
+//                   res.data = allcode;
+//                   resolve(res);
+//             } catch (e) {
+//                   reject(e);
+//             }
+//       });
+// };
+
 module.exports = {
       handleUserLogin: handleUserLogin,
-      checkUserEmail: checkUserEmail,
       getAllUsers: getAllUsers,
-      createNewUser: createNewUser,
+      checkUserEmail: checkUserEmail,
       deleteUser: deleteUser,
       updateUserData: updateUserData,
-      getAllCodeService: getAllCodeService,
+      createNewUser: createNewUser,
+      changePassword: changePassword,
+      forgotPassword: forgotPassword,
 };

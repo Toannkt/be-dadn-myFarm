@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    & + .info-item {
+        margin-left: 42px;
+    }
+}
+
+.info-text {
+    margin-left: 15px;
+}
+
+.info-heading {
+    font-weight: 500;
+}

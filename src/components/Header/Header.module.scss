@@ -1,0 +1,117 @@
+.wrapper {
+    width: var(--inner-width);
+    position: fixed;
+    top: var(--header-margin-top);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-container {
+    width: 220px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: 50px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.nav-item {
+    font-size: 2.4rem;
+    text-decoration: none;
+    color: #000;
+    font-weight: 600;
+    & + .nav-item {
+        margin-left: 64px;
+    }
+}
+
+.active {
+    color: #fff;
+}
+
+.actions {
+    width: 220px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.hello {
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.login-btn {
+    font-size: 1.6rem;
+    font-weight: 600;
+    border: 3px solid #059669;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 30px;
+    padding: 9px 16px;
+    min-width: 100px;
+    color: #059669;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & + .log-btn {
+        margin-left: 20px;
+    }
+    &.btnActive,
+    &:hover {
+        color: #fff;
+        background-color: #059669;
+    }
+}
+
+.menu-box {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 5px;
+    box-shadow: 0px 16px 24px 12px rgba(19, 19, 22, 0.16);
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    color: #1c1c1e;
+    opacity: 0.72;
+    text-decoration: none;
+    &:hover {
+        background-color: #f4f5ff;
+    }
+    &.active {
+        fill: #0049fc;
+        color: #0049fc;
+        background-color: #f4f5ff;
+    }
+}
+
+.icon-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+}
+
+.text-item {
+    margin-left: 10px;
+    font-weight: 600;
+    width: 100px;
+}

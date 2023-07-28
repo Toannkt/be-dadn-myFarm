@@ -1,0 +1,257 @@
+.wrapper {
+    height: var(--content-height);
+    width: 100vw;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 20px);
+}
+
+.location-container {
+}
+
+.add-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    h1 {
+        font-weight: 500;
+    }
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.location-list {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.location-item {
+    padding: 10px 8px;
+    font-size: 2.4rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    &:hover {
+        background-color: #dfdcdc;
+    }
+}
+
+.location-active {
+    background-color: #dfdcdc;
+}
+
+.thing-container {
+    margin-left: 64px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.collection-container {
+}
+
+table,
+th {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.table-container {
+    max-height: 195px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.thing-table {
+}
+
+.table-heading th {
+    font-weight: 600;
+    background-color: #dfdcdc;
+}
+
+.table-body {
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+th {
+    font-weight: 500;
+    padding: 8px;
+}
+
+.watch-btn {
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 15px;
+    border: 1px solid #ccc;
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+//Copy
+
+/* The switch - the box around the slider */
+
+.switch {
+    font-size: 17px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #9fccfa;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slider:before {
+    position: absolute;
+    content: '';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2em;
+    width: 2em;
+    inset: 0;
+    background-color: #ccc;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.switch input:checked + .slider {
+    background: #2ec82e;
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #2ec82e;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(1.6em);
+}
+
+.box {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-validation {
+    border-radius: 15px;
+    width: 500px;
+    padding: 20px 24px;
+    background-color: #faeded;
+    box-shadow: 0px 16px 24px 1px rgba(19, 19, 22, 0.16);
+}
+
+.close-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: #e6e6e6;
+}
+
+.warning {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 15px;
+}
+
+.close-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #e6e6e6;
+}
+
+.close-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    fill: red;
+}
+
+.content {
+    margin-left: 10px;
+    p {
+        color: #626262;
+    }
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.action-btn {
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 10px 15px;
+    cursor: pointer;
+    & + .action-btn {
+        margin-left: 15px;
+    }
+    &:hover {
+        opacity: 0.8;
+    }
+}

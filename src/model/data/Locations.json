@@ -1,0 +1,46 @@
+{
+    "data": [
+        {
+            "id": "LOCATION_01",
+            "name": "A",
+            "user_id": "2013055",
+            "address": "Thu Duc - Sai Gon"
+        },
+        {
+            "id": "LOCATION_02",
+            "name": "B",
+            "user_id": "2013055",
+            "address": "Di An - Binh Duong"
+        },
+        {
+            "id": "LOCATION_01dsfds",
+            "name": "Afsdds",
+            "user_id": "2013055",
+            "address": "Thu Duc - Sai Gon"
+        },
+        {
+            "id": "LOCATION_02fsdf",
+            "name": "Bfsdfs",
+            "user_id": "2013055",
+            "address": "Di An - Binh Duong"
+        },
+        {
+            "id": "LOCATION_01dsfdsfsdf",
+            "name": "Afsdds",
+            "user_id": "2013055",
+            "address": "Thu Duc - Sai Gon"
+        },
+        {
+            "id": "LOCATION_02fsdffsd",
+            "name": "Bfsdfsfsdf",
+            "user_id": "2013055",
+            "address": "Di An - Binh Duong"
+        },
+        {
+            "id": "LOCATION_03",
+            "name": "C",
+            "user_id": "2013065",
+            "address": "DakPo - Gia Lai"
+        }
+    ]
+}

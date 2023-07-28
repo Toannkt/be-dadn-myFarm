@@ -1,0 +1,8 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    margin-top: calc(var(--header-height) + 2 * (var(--header-margin-top)));
+}

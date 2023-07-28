@@ -1,0 +1,64 @@
+{
+    "data": [
+        {
+            "id": "SS_01",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Light",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "13/07/2023"
+        },
+        {
+            "id": "SS_02",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Humidity",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "14/07/2023"
+        },
+        {
+            "id": "SS_03",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Temperature",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "15/07/2023"
+        },
+        {
+            "id": "SS_01dsfadsf",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Light",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "13/07/2023"
+        },
+        {
+            "id": "SS_02fsdfs",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Humidity",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "14/07/2023"
+        },
+        {
+            "id": "SS_03fsdfds",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "Temperature",
+            "status": "ON",
+            "min": 50,
+            "max": 60,
+            "addDate": "15/07/2023"
+        }
+    ]
+}

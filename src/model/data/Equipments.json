@@ -1,0 +1,49 @@
+{
+    "data": [
+        {
+            "id": "EQ_01",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "PUMP",
+            "status": "ON",
+            "autoMode": "ON",
+            "addDate": "13/07/2023"
+        },
+        {
+            "id": "EQ_02",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "PUMP",
+            "status": "ON",
+            "autoMode": "OFF",
+            "addDate": "14/07/2023"
+        },
+        {
+            "id": "EQ_01fdsfsd",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "PUMP",
+            "status": "ON",
+            "autoMode": "ON",
+            "addDate": "13/07/2023"
+        },
+        {
+            "id": "EQ_02fsdfs",
+            "user_id": "2013055",
+            "location_id": "LOCATION_01",
+            "name": "PUMP",
+            "status": "ON",
+            "autoMode": "OFF",
+            "addDate": "14/07/2023"
+        },
+        {
+            "id": "EQ_03",
+            "user_id": "2013065",
+            "location_id": "LOCATION_03",
+            "name": "PUMP",
+            "status": "ON",
+            "autoMode": "ON",
+            "addDate": "13/07/2023"
+        }
+    ]
+}

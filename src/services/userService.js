@@ -258,7 +258,7 @@ const forgotPassword = (email) => {
                         const hashPw = await hashUserPassword(resetPassword);
                         user.password = hashPw;
                         await user.save();
-                        await emailService.sendEmail({
+                        await emailService.sendEmailForgotPassword({
                               reciverEmail: user.email,
                               firstName: user.firstName,
                               resetPassword: resetPassword,

@@ -140,34 +140,46 @@ const deleteDevice = (idDevice) => {
 const setStatusDevice = (idDevice, status) => {
       return new Promise(async (resolve, reject) => {
             try {
-                  if (!idDevice) {
-                        resolve({
-                              errCode: 1,
-                              message: "Missing id device!",
+                  try {
+                        if (!idDevice) {
+                              resolve({
+                                    errCode: 1,
+                                    message: "Missing id device!",
+                              });
+                        }
+                        if (!status) {
+                              resolve({
+                                    errCode: 1,
+                                    message: "Missing status!",
+                              });
+                        }
+                        if (status !== "On" && status !== "Off") {
+                              resolve({
+                                    errCode: 3,
+                                    message: `Wrong status ${status}, you mean status 'On' or 'Off', right?`,
+                              });
+                        }
+                        const device = await db.Device.findOne({
+                              where: { id: idDevice },
+                              raw: false,
                         });
-                  }
-                  if (!status) {
-                        resolve({
-                              errCode: 1,
-                              message: "Missing status!",
-                        });
-                  }
-                  const device = await db.Device.findOne({
-                        where: { id: idDevice },
-                        raw: false,
-                  });
-                  if (device === null) {
-                        resolve({
-                              errCode: 2,
-                              message: `Device ${idDevice} does not exist!`,
-                        });
-                  } else {
-                        device.status = status;
-                        await device.save();
-                        resolve({
-                              errCode: 0,
-                              message: `Success change status device id ${idDevice}`,
-                        });
+                        if (device === null) {
+                              resolve({
+                                    errCode: 2,
+                                    message: `Device ${idDevice} does not exist!`,
+                              });
+                        } else {
+                              device.status = status;
+                              device.autoMode = status;
+                              await device.save();
+                              resolve({
+                                    errCode: 0,
+                                    time: "asdads",
+                                    message: `Success change status device id ${idDevice}`,
+                              });
+                        }
+                  } catch (e) {
+                        reject(e);
                   }
             } catch (e) {
                   reject(e);

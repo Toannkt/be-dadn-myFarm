@@ -24,11 +24,12 @@ let initWebRoutes = (app) => {
       router.put("/api/update-name-location", locationController.handleUpdateLocation);
       router.delete("/api/delete-location", locationController.handleDeleteLocation);
 
-      //deviceController
+      //deviceController (pump, led)
       router.get("/api/get-device", deviceController.handleGetDevice);
       router.post("/api/add-device", deviceController.handleAddDevice);
       router.put("/api/update-device", deviceController.handleUpdateDevice);
       router.delete("/api/delete-device", deviceController.handeDeleteDevice);
+      router.put("/api/set-status-device", deviceController.handleSetStatusDevice);
       router.get("/api/get-all-device", deviceController.handleGetAllDevice);
 
       //sensorController
@@ -37,10 +38,11 @@ let initWebRoutes = (app) => {
       router.put("/api/update-sensor", sensorController.handleUpdateSensor);
       router.delete("/api/delete-sensor", sensorController.handleDeleteSensor);
       router.get("/api/get-all-sensor", sensorController.handleGetAllCode);
-      router.get("/api/get-all-sensor-by-id", sensorController.handleGetAllHistorySensorById);
+      router.get("/api/get-all-history-sensor-by-id", sensorController.handleGetAllHistorySensorById);
+      router.post("/api/warn-condition-sensor", sensorController.handleLimitThresholdWarning);
 
       //getDataFromAdafruit
-      router.get("/api/get-adafruit", adafruitController.getDataAdafruit);
+      router.get("/api/get-adafruit", adafruitController.handleGetDataAdafruit);
       //Sensor
 
       return app.use("/", router);

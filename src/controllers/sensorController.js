@@ -41,6 +41,14 @@ const handleGetAllHistorySensorById = async (req, res) => {
       return res.status(200).json(message);
 };
 
+const handleLimitThresholdWarning = async (req, res) => {
+      const email = req.body.email;
+      const nameLocation = req.body.nameLocation;
+      const descCondition = req.body.descCondition;
+      const message = await sensorService.limitThresholdWarning(email, nameLocation, descCondition);
+      return res.status(200).json(message);
+};
+
 module.exports = {
       handleGetSensor: handleGetSensor,
       handleAddSensor: handleAddSensor,
@@ -48,4 +56,5 @@ module.exports = {
       handleDeleteSensor: handleDeleteSensor,
       handleGetAllCode: handleGetAllCode,
       handleGetAllHistorySensorById: handleGetAllHistorySensorById,
+      handleLimitThresholdWarning: handleLimitThresholdWarning,
 };

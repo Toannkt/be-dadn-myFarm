@@ -28,6 +28,13 @@ const handeDeleteDevice = async (req, res) => {
       return res.status(200).json(message);
 };
 
+const handleSetStatusDevice = async (req, res) => {
+      let id = req.body.id;
+      let status = req.body.status;
+      const message = await deviceService.setStatusDevice(id, status);
+      return res.status(200).json(message);
+};
+
 const handleGetAllDevice = async (req, res) => {
       let keyDevice = req.body.keyDevice;
       const message = await deviceService.getAllDevice(keyDevice);
@@ -39,5 +46,6 @@ module.exports = {
       handleAddDevice: handleAddDevice,
       handleUpdateDevice: handleUpdateDevice,
       handeDeleteDevice: handeDeleteDevice,
+      handleSetStatusDevice: handleSetStatusDevice,
       handleGetAllDevice: handleGetAllDevice,
 };

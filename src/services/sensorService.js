@@ -1,6 +1,7 @@
 /** @format */
 
 import db from "../models/index";
+import emailService from "./emailService";
 
 const getSensor = (idSensor) => {
       return new Promise(async (resolve, reject) => {
@@ -225,6 +226,37 @@ const getAllHistorySensorById = (idSensor) => {
             }
       });
 };
+
+const limitThresholdWarning = (email, nameLocation, descCondition) => {
+      return new Promise(async (resolve, reject) => {
+            try {
+                  let user = await db.User.findOne({
+                        where: { email: email },
+                        raw: false,
+                  });
+                  if (!user) {
+                        resolve({
+                              errCode: 2,
+                              message: "Email does not exist! Please try again.",
+                        });
+                  } else {
+                        await emailService.sendEmailGoBeyondLimit({
+                              reciverEmail: user.email,
+                              firstName: user.firstName,
+                              nameLocation: nameLocation,
+                              descCondition: descCondition,
+                        });
+                        resolve({
+                              errCode: 0,
+                              message: "Please check your email to received notification!",
+                        });
+                  }
+            } catch (e) {
+                  reject(e);
+            }
+      });
+};
+
 module.exports = {
       addSensor: addSensor,
       getSensor: getSensor,
@@ -233,4 +265,5 @@ module.exports = {
       setStatusSensor: setStatusSensor,
       getAllSensor: getAllSensor,
       getAllHistorySensorById: getAllHistorySensorById,
+      limitThresholdWarning: limitThresholdWarning,
 };

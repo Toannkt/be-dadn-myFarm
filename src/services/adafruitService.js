@@ -7,14 +7,13 @@ const getDataAdafruit = () => {
       return new Promise(async (resolve, reject) => {
             try {
                   // make axios post request
-                  const res = await axios.get("https://io.adafruit.com/api/v2/nhandangnamthien/feeds/v4");
+                  const res = await axios.get("https://io.adafruit.com/api/v2/nhandangnamthien/feeds/b2");
                   resolve(res.data);
             } catch (error) {
                   reject(error);
             }
       });
 };
-
 module.exports = {
       getDataAdafruit: getDataAdafruit,
 };

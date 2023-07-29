@@ -74,7 +74,43 @@ const getBodyHTMLEmailGoBeyondLimit = (dataSend) => {
       console.log("result: ", result);
       return result;
 };
+
+//email contact
+
+let sendEmailContact = async (dataSend) => {
+      let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            secure: false,
+            auth: {
+                  user: process.env.EMAIL_APP,
+                  pass: process.env.EMAIL_APP_PASSWORD,
+            },
+      });
+
+      let info = await transporter.sendMail({
+            from: `"Farm" ${dataSend.email}`,
+            to: "toan.nguyenkhactoan432@hcmut.edu.vn",
+            subject: `${dataSend.title}`,
+            html: getBodyHTMLEmailContact(dataSend),
+      });
+};
+
+const getBodyHTMLEmailContact = (dataSend) => {
+      console.log("dataSend: ", dataSend);
+      let result = `
+            <h3>Xin chào người điều hành myFarm!</h3>
+            <h4>Description: ${dataSend.desc}</h4>
+            <p>Số điện thoại: ${dataSend.phoneNumber}</p>
+            <p>Farm ${dataSend.firstName}</p>
+            <p>Trân trọng!</p>
+        `;
+
+      console.log("result: ", result);
+      return result;
+};
 module.exports = {
       sendEmailForgotPassword: sendEmailForgotPassword,
       sendEmailGoBeyondLimit: sendEmailGoBeyondLimit,
+      sendEmailContact: sendEmailContact,
 };

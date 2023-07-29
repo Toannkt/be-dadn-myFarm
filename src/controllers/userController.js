@@ -73,38 +73,24 @@ const handleDeleteUser = async (req, res) => {
       return res.status(200).json(message);
 };
 
-// let getAllCode = async (req, res) => {
-//       try {
-//             let typeInput = req.query.type;
-//             if (!typeInput) {
-//                   return res.status(200).json({
-//                         errCode: 1,
-//                         errMessage: "Missing parameter, plz provide type",
-//                   });
-//             }
-//             let data = await userService.getAllCodeService(typeInput);
-//             if (data) {
-//                   return res.status(200).json(data);
-//             } else {
-//                   return res.status(200).json({ errCode: 1, errMessage: "No data found" });
-//             }
-//       } catch (e) {
-//             console.log("get all code error", e);
-//             return res.status(200).json({
-//                   errCode: -1,
-//                   errMessage: "Error from server",
-//             });
-//       }
-// };
+const handleContactUsByEmail = async (req, res) => {
+      let email = req.body.email;
+      let phoneNumber = req.body.phoneNumber;
+      let title = req.body.title;
+      let firstName = req.body.firstName;
+      let desc = req.body.desc;
+      const message = await userService.contactUsByEmail(email, phoneNumber, firstName, desc, title);
+      return res.status(200).json(message);
+};
 
 module.exports = {
       handleLogin: handleLogin,
       handleGetAllUsers: handleGetAllUsers,
       handleEditNewUser: handleEditNewUser,
       handleDeleteUser: handleDeleteUser,
-      // getAllCode: getAllCode,
       handleCreateNewUser: handleCreateNewUser,
       handleLogin: handleLogin,
       changePassword: changePassword,
       forgotPassword: forgotPassword,
+      handleContactUsByEmail: handleContactUsByEmail,
 };

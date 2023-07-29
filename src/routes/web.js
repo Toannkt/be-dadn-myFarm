@@ -17,6 +17,7 @@ let initWebRoutes = (app) => {
       router.put("/api/change-password", userController.changePassword);
       router.delete("/api/delete-user", userController.handleDeleteUser);
       router.post("/api/forgot-password", userController.forgotPassword);
+      router.post("/api/contact-us", userController.handleContactUsByEmail);
 
       //locationController
       router.get("/api/get-location-by-id", locationController.handleGetLocation);

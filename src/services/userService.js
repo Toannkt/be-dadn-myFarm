@@ -275,21 +275,39 @@ const forgotPassword = (email) => {
             }
       });
 };
-// const getAllCodeService = (typeInput) => {
-//       return new Promise(async (resolve, reject) => {
-//             try {
-//                   let res = {};
-//                   let allcode = await db.Allcodes.findAll({
-//                         where: { type: typeInput },
-//                   });
-//                   res.errCode = 0;
-//                   res.data = allcode;
-//                   resolve(res);
-//             } catch (e) {
-//                   reject(e);
-//             }
-//       });
-// };
+
+const contactUsByEmail = (email, phoneNumber, firstName, desc, title) => {
+      return new Promise(async (resolve, reject) => {
+            try {
+                  if (!email) {
+                        resolve({
+                              errCode: 1,
+                              message: "Missing email!",
+                        });
+                  }
+                  const user = await db.User.findOne({
+                        where: { email: email },
+                        raw: false,
+                  });
+                  if (user === null) {
+                        resolve({
+                              errCode: 2,
+                              message: "Email does not exist!",
+                        });
+                  } else {
+                        await emailService.sendEmailContact({
+                              email: email,
+                              title: title,
+                              phoneNumber: phoneNumber,
+                              desc: desc,
+                              firstName: firstName,
+                        });
+                  }
+            } catch (e) {
+                  reject(e);
+            }
+      });
+};
 
 module.exports = {
       handleUserLogin: handleUserLogin,
@@ -300,4 +318,5 @@ module.exports = {
       createNewUser: createNewUser,
       changePassword: changePassword,
       forgotPassword: forgotPassword,
+      contactUsByEmail: contactUsByEmail,
 };

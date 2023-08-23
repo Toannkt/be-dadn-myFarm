@@ -4,7 +4,7 @@
 import deviceService from "../services/deviceService";
 
 const handleGetDevice = async (req, res) => {
-      let idDevice = req.body.id;
+      let idDevice = req.query.idDevice;
       let dataDevice = await deviceService.getDevice(idDevice);
       return res.status(200).json(dataDevice);
 };
@@ -29,15 +29,10 @@ const handeDeleteDevice = async (req, res) => {
 };
 
 const handleSetStatusDevice = async (req, res) => {
-      let id = req.body.id;
-      let status = req.body.status;
+      let id = req.body.data.id;
+      let status = req.body.data.status;
+      console.log(status);
       const message = await deviceService.setStatusDevice(id, status);
-      return res.status(200).json(message);
-};
-
-const handleGetAllDevice = async (req, res) => {
-      let keyDevice = req.body.keyDevice;
-      const message = await deviceService.getAllDevice(keyDevice);
       return res.status(200).json(message);
 };
 
@@ -47,5 +42,4 @@ module.exports = {
       handleUpdateDevice: handleUpdateDevice,
       handeDeleteDevice: handeDeleteDevice,
       handleSetStatusDevice: handleSetStatusDevice,
-      handleGetAllDevice: handleGetAllDevice,
 };

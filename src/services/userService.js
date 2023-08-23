@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import db from "../models/index";
-import validations from "../utils/validations";
+import historyService from "./historyService";
 import emailService from "./emailService";
 const salt = bcrypt.genSaltSync(10);
 
@@ -55,8 +55,7 @@ const getAllUsers = (userId) => {
                                     exclude: ["password"],
                               },
                         });
-                  }
-                  if (userId !== "All" && userId) {
+                  } else {
                         users = await db.User.findOne({
                               attributes: {
                                     exclude: ["password"],
@@ -115,6 +114,7 @@ const createNewUser = async (data) => {
                               address: data.address,
                               phoneNumber: data.phoneNumber,
                               roleId: "CUSTOMER",
+                              enabled: "false",
                               description: data.description,
                         });
                         resolve({
@@ -188,9 +188,58 @@ const updateUserData = (data) => {
       });
 };
 
+const enabledUser = (id, status) => {
+      return new Promise(async (resolve, reject) => {
+            try {
+                  if (!id) {
+                        resolve({
+                              errCode: 1,
+                              message: "Missing id user",
+                        });
+                  }
+                  const user = await db.User.findOne({
+                        where: { id: id },
+                        raw: false,
+                  });
+                  if (user === null) {
+                        resolve({
+                              errCode: 2,
+                              message: "User does not exist",
+                        });
+                  } else {
+                        user.enabled = status;
+                        await user.save();
+                        resolve({
+                              errCode: 0,
+                              message: "Success",
+                        });
+                        if (status === "true") {
+                              const a = setInterval(async () => {
+                                    await historyService.saveHistorySensor(["19", "21", "22", "23"], id);
+                                    const user = await getAllUsers(id);
+                                    if (user.enabled === "false") {
+                                          clearInterval(a);
+                                    }
+                              }, 30000);
+                              const b = setInterval(async () => {
+                                    await historyService.saveHistoryDevice(["16", "17"], id);
+                                    const user = await getAllUsers(id);
+                                    if (user.enabled === "false") {
+                                          clearInterval(b);
+                                    }
+                              }, 2000);
+                        }
+                  }
+            } catch (e) {
+                  reject(e);
+            }
+      });
+};
+
 const changePassword = (data) => {
       return new Promise(async (resolve, reject) => {
             try {
+                  console.log(data);
                   if (!data.id) {
                         resolve({
                               errCode: 2,
@@ -227,6 +276,7 @@ const changePassword = (data) => {
                         });
                   } else {
                         if (user) {
+                              console.log(data);
                               user.password = await hashUserPassword(newPassword);
                               await user.save();
                         }
@@ -319,4 +369,5 @@ module.exports = {
       changePassword: changePassword,
       forgotPassword: forgotPassword,
       contactUsByEmail: contactUsByEmail,
+      enabledUser: enabledUser,
 };

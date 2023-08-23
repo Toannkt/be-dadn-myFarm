@@ -22,7 +22,7 @@ const handleLogin = async (req, res) => {
 };
 
 let handleGetAllUsers = async (req, res) => {
-      let id = req.body.id;
+      let id = req.query.id;
       if (!id) {
             return res.status(200).json({
                   errCode: 1,
@@ -83,6 +83,13 @@ const handleContactUsByEmail = async (req, res) => {
       return res.status(200).json(message);
 };
 
+const handleEnabledUser = async (req, res) => {
+      let id = req.body.data.id;
+      let status = req.body.data.status;
+      const message = await userService.enabledUser(id, status);
+      return res.status(200).json(message);
+};
+
 module.exports = {
       handleLogin: handleLogin,
       handleGetAllUsers: handleGetAllUsers,
@@ -93,4 +100,5 @@ module.exports = {
       changePassword: changePassword,
       forgotPassword: forgotPassword,
       handleContactUsByEmail: handleContactUsByEmail,
+      handleEnabledUser: handleEnabledUser,
 };

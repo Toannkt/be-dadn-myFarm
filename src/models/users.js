@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
                   address: DataTypes.STRING,
                   roleId: DataTypes.STRING,
                   phoneNumber: DataTypes.STRING,
+                  enabled: DataTypes.STRING,
                   description: DataTypes.TEXT("long"),
             },
             {

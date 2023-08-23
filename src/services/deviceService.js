@@ -11,10 +11,15 @@ const getDevice = (idDevice) => {
                               message: "Missing idDevice!",
                         });
                   }
-                  const device = await db.Device.findOne({
-                        where: { id: idDevice },
-                        raw: false,
-                  });
+                  let device = "";
+                  if (idDevice === "All") {
+                        device = await db.Device.findAll();
+                  } else {
+                        device = await db.Device.findOne({
+                              where: { id: idDevice },
+                              raw: false,
+                        });
+                  }
                   if (device === null) {
                         resolve({
                               errCode: 2,
@@ -174,40 +179,11 @@ const setStatusDevice = (idDevice, status) => {
                               await device.save();
                               resolve({
                                     errCode: 0,
-                                    time: "asdads",
                                     message: `Success change status device id ${idDevice}`,
                               });
                         }
                   } catch (e) {
                         reject(e);
-                  }
-            } catch (e) {
-                  reject(e);
-            }
-      });
-};
-
-const getAllDevice = (keyDevice) => {
-      return new Promise(async (resolve, reject) => {
-            try {
-                  if (!keyDevice) {
-                        resolve({
-                              errCode: 1,
-                              message: "Missing keyDevice",
-                        });
-                  }
-                  if (keyDevice !== "allDevice") {
-                        resolve({
-                              errCode: 2,
-                              message: `Key device '${key}' does not exist`,
-                        });
-                  } else {
-                        const allDevice = await db.Device.findAll();
-                        resolve({
-                              errCode: 0,
-                              message: "Success",
-                              allDevice: allDevice,
-                        });
                   }
             } catch (e) {
                   reject(e);
@@ -252,6 +228,5 @@ module.exports = {
       updateDevice: updateDevice,
       deleteDevice: deleteDevice,
       setStatusDevice: setStatusDevice,
-      getAllDevice: getAllDevice,
       getAllHistoryDeviceById: getAllHistoryDeviceById,
 };

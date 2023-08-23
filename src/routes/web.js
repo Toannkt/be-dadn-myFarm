@@ -6,6 +6,7 @@ import locationController from "../controllers/locationController";
 import deviceController from "../controllers/deviceController";
 import sensorController from "../controllers/sensorController";
 import userController from "../controllers/userController";
+import historyContrller from "../controllers/historyController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
@@ -18,6 +19,7 @@ let initWebRoutes = (app) => {
       router.delete("/api/delete-user", userController.handleDeleteUser);
       router.post("/api/forgot-password", userController.forgotPassword);
       router.post("/api/contact-us", userController.handleContactUsByEmail);
+      router.put("/api/change-status-user", userController.handleEnabledUser);
 
       //locationController
       router.get("/api/get-location-by-id", locationController.handleGetLocation);
@@ -31,19 +33,21 @@ let initWebRoutes = (app) => {
       router.put("/api/update-device", deviceController.handleUpdateDevice);
       router.delete("/api/delete-device", deviceController.handeDeleteDevice);
       router.put("/api/set-status-device", deviceController.handleSetStatusDevice);
-      router.get("/api/get-all-device", deviceController.handleGetAllDevice);
 
       //sensorController
       router.get("/api/get-sensor", sensorController.handleGetSensor);
       router.post("/api/add-sensor", sensorController.handleAddSensor);
       router.put("/api/update-sensor", sensorController.handleUpdateSensor);
       router.delete("/api/delete-sensor", sensorController.handleDeleteSensor);
-      router.get("/api/get-all-sensor", sensorController.handleGetAllCode);
-      router.get("/api/get-all-history-sensor-by-id", sensorController.handleGetAllHistorySensorById);
       router.post("/api/warn-condition-sensor", sensorController.handleLimitThresholdWarning);
 
+      //historyController
+      // router.post("/api/save-history-sensor", historyContrller.handleSaveHistorySensor);
+      router.get("/api/get-all-history", historyContrller.handleGetAllHistoryEquiptById);
+      router.delete("/api/delete-history-by-id", historyContrller.handleDeleteHistory);
+      router.delete("/api/clear-history-sensor-by-type", historyContrller.handleClearHistoryByType);
       //getDataFromAdafruit
-      router.get("/api/get-adafruit", adafruitController.handleGetDataAdafruit);
+      // router.get("/api/get-adafruit", adafruitController.handleGetDataAdafruit);
       //Sensor
 
       return app.use("/", router);

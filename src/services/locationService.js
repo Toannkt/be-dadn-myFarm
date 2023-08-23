@@ -10,10 +10,15 @@ const getLocation = (idLocation) => {
                               message: "Missing idLocation!",
                         });
                   }
-                  const location = await db.Location.findOne({
-                        where: { id: idLocation },
-                        raw: false,
-                  });
+                  let location = "";
+                  if (idLocation === "All") {
+                        location = await db.Location.findAll({});
+                  } else {
+                        location = await db.Location.findOne({
+                              where: { id: idLocation },
+                              raw: false,
+                        });
+                  }
                   if (location === null) {
                         resolve({
                               errCode: 2,

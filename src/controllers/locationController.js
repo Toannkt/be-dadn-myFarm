@@ -2,7 +2,7 @@
 import locationService from "../services/locationService";
 
 const handleGetLocation = async (req, res) => {
-      let idLocation = req.body.id;
+      let idLocation = req.query.idLocation;
       const data = await locationService.getLocation(idLocation);
       return res.status(200).json(data);
 };

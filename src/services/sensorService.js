@@ -12,10 +12,15 @@ const getSensor = (idSensor) => {
                               message: "Missing id sensor!",
                         });
                   }
-                  const sensor = await db.Sensor.findOne({
-                        where: { id: idSensor },
-                        raw: false,
-                  });
+                  let sensor = "";
+                  if (idSensor === "All") {
+                        sensor = await db.Sensor.findAll();
+                  } else {
+                        sensor = await db.Sensor.findOne({
+                              where: { id: idSensor },
+                              raw: false,
+                        });
+                  }
                   if (sensor === null) {
                         resolve({
                               errCode: 2,
@@ -45,14 +50,12 @@ const addSensor = (dataSensor) => {
                   }
                   await db.Sensor.create({
                         type: dataSensor.type,
-                        value: dataSensor.value,
+                        value: "0",
                         name: dataSensor.name,
-                        status: dataSensor.status,
+                        status: "On",
                         idLocation: dataSensor.idLocation,
                         minLimited: dataSensor.minLimited,
                         maxLimited: dataSensor.maxLimited,
-                        timeOn: dataSensor.timeOn,
-                        timeOff: dataSensor.timeOff,
                   });
 
                   resolve({
@@ -65,7 +68,7 @@ const addSensor = (dataSensor) => {
       });
 };
 
-const updateSensor = (name, minLimited, maxLimited, idSensor) => {
+const updateSensor = (minLimited, maxLimited, idSensor) => {
       return new Promise(async (resolve, reject) => {
             try {
                   if (!idSensor) {
@@ -84,7 +87,6 @@ const updateSensor = (name, minLimited, maxLimited, idSensor) => {
                               message: `IdSensor ${idSensor} does not exist!`,
                         });
                   } else {
-                        sensor.name = name;
                         sensor.minLimited = minLimited;
                         sensor.maxLimited = maxLimited;
                         await sensor.save();
@@ -168,65 +170,6 @@ const setStatusSensor = (idSensor, status) => {
       });
 };
 
-const getAllSensor = (keySensor) => {
-      return new Promise(async (resolve, reject) => {
-            try {
-                  if (!keySensor) {
-                        resolve({
-                              errCode: 1,
-                              message: "Missing key sensor",
-                        });
-                  }
-                  if (keySensor !== "allSensor") {
-                        resolve({
-                              errCode: 2,
-                              message: `Key sensor '${key}' does not exist`,
-                        });
-                  } else {
-                        const allSensor = await db.Sensor.findAll();
-                        resolve({
-                              errCode: 0,
-                              message: "Success",
-                              allSensor: allSensor,
-                        });
-                  }
-            } catch (e) {
-                  reject(e);
-            }
-      });
-};
-
-const getAllHistorySensorById = (idSensor) => {
-      return new Promise(async (resolve, reject) => {
-            try {
-                  if (!idSensor) {
-                        resolve({
-                              errCode: 1,
-                              message: "Missing id sensor!",
-                        });
-                  }
-                  const sensors = await db.Sensor.findAll({
-                        where: { id: idSensor },
-                        raw: false,
-                  });
-                  if (sensors === null) {
-                        resolve({
-                              errCode: 2,
-                              message: `IdSensor ${idSensor} does not exist`,
-                        });
-                  } else {
-                        resolve({
-                              errCode: 0,
-                              message: "Success",
-                              dataSensors: sensors,
-                        });
-                  }
-            } catch (e) {
-                  reject(e);
-            }
-      });
-};
-
 const limitThresholdWarning = (email, nameLocation, descCondition) => {
       return new Promise(async (resolve, reject) => {
             try {
@@ -263,7 +206,5 @@ module.exports = {
       updateSensor: updateSensor,
       deleteSensor: deleteSensor,
       setStatusSensor: setStatusSensor,
-      getAllSensor: getAllSensor,
-      getAllHistorySensorById: getAllHistorySensorById,
       limitThresholdWarning: limitThresholdWarning,
 };

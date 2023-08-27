@@ -57,6 +57,7 @@ const changePassword = async (req, res) => {
 };
 
 const forgotPassword = async (req, res) => {
+      console.log("req.body: ", req.body);
       let email = req.body.email;
       let message = await userService.forgotPassword(email);
       return res.status(200).json(message);
